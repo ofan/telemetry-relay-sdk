@@ -1,0 +1,39 @@
+{
+  "name": "@ofan/telemetry-relay-sdk",
+  "version": "0.2.0",
+  "description": "Lightweight client SDK for telemetry-relay",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ofan/telemetry-relay-sdk.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "telemetry",
+    "analytics",
+    "cloudflare-workers",
+    "sdk"
+  ],
+  "scripts": {
+    "build": "sh scripts/gen-version.sh && tsup src/index.ts --format esm,cjs --dts",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "vitest": "~3.0.0",
+    "typescript": "^5.7.0"
+  }
+}
