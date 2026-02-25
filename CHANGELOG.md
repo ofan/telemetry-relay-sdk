@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/ofan/telemetry-relay-sdk/compare/telemetry-relay-sdk-v0.2.0...telemetry-relay-sdk-v0.2.1) (2026-02-25)
+
+
+### Bug Fixes
+
+* remove NPM_TOKEN — use OIDC trusted publishing for auth ([42cb644](https://github.com/ofan/telemetry-relay-sdk/commit/42cb644c3008ea5ec1831d68b227261906e28821))
+
 ## [0.2.0](https://github.com/ofan/telemetry-relay/compare/telemetry-relay-sdk-v0.1.0...telemetry-relay-sdk-v0.2.0) (2026-02-25)
 
 
