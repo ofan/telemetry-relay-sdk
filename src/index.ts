@@ -7,7 +7,6 @@ export interface RelayOptions {
   token: string;
   deviceType?: DeviceType;
   machineId?: string;
-  userAgent?: string;
 }
 
 export interface Relay {
@@ -16,8 +15,6 @@ export interface Relay {
 
 export function createRelay(options: RelayOptions): Relay {
   const baseUrl = options.url.replace(/\/+$/, "");
-  const ua = options.userAgent
-    ?? (typeof navigator !== "undefined" ? navigator.userAgent : undefined);
 
   return {
     async track(tool, event, version, properties = {}) {
@@ -32,7 +29,6 @@ export function createRelay(options: RelayOptions): Relay {
             tool, event, version, properties,
             ...(options.deviceType && { deviceType: options.deviceType }),
             ...(options.machineId && { machineId: options.machineId }),
-            ...(ua && { userAgent: ua }),
           }),
         });
       } catch {
