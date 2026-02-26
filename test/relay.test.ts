@@ -17,7 +17,7 @@ describe("createRelay", () => {
     );
 
     const relay = createRelay({ url: "https://relay.example.com", token: "abc" });
-    await relay.track("my-cli", "command_run", "1.0.0", { command: "build" });
+    await relay.track("my-cli", "command_run", "1.0.0", { properties: { command: "build" } });
 
     expect(fetchSpy).toHaveBeenCalledOnce();
     const [url, init] = fetchSpy.mock.calls[0];
@@ -47,6 +47,26 @@ describe("createRelay", () => {
       (vi.mocked(fetch).mock.calls[0][1] as RequestInit).body as string,
     );
     expect(body.properties).toEqual({});
+  });
+
+  it("sends deviceType and machineId as top-level fields", async () => {
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response(JSON.stringify({ id: "uuid-123" }), { status: 202 }),
+    );
+
+    const relay = createRelay({ url: "https://relay.example.com", token: "abc" });
+    await relay.track("my-cli", "evt", "1.0.0", {
+      deviceType: "cli",
+      machineId: "abc123",
+      properties: { os: "linux" },
+    });
+
+    const body = JSON.parse(
+      (vi.mocked(fetch).mock.calls[0][1] as RequestInit).body as string,
+    );
+    expect(body.deviceType).toBe("cli");
+    expect(body.machineId).toBe("abc123");
+    expect(body.properties.os).toBe("linux");
   });
 
   it("strips trailing slash from URL", async () => {
