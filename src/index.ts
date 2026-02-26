@@ -1,12 +1,8 @@
 export { VERSION } from "./version.js";
 
-export type DeviceType = "cli" | "ci" | "server" | "desktop" | "mobile" | "web";
-
 export interface RelayOptions {
   url: string;
   token: string;
-  deviceType?: DeviceType;
-  machineId?: string;
 }
 
 export interface Relay {
@@ -25,11 +21,7 @@ export function createRelay(options: RelayOptions): Relay {
             "Content-Type": "application/json",
             Authorization: `Bearer ${options.token}`,
           },
-          body: JSON.stringify({
-            tool, event, version, properties,
-            ...(options.deviceType && { deviceType: options.deviceType }),
-            ...(options.machineId && { machineId: options.machineId }),
-          }),
+          body: JSON.stringify({ tool, event, version, properties }),
         });
       } catch {
         // Fire-and-forget — swallow errors

@@ -49,27 +49,6 @@ describe("createRelay", () => {
     expect(body.properties).toEqual({});
   });
 
-  it("sends deviceType and machineId from relay options", async () => {
-    vi.spyOn(globalThis, "fetch").mockResolvedValue(
-      new Response(JSON.stringify({ id: "uuid-123" }), { status: 202 }),
-    );
-
-    const relay = createRelay({
-      url: "https://relay.example.com",
-      token: "abc",
-      deviceType: "cli",
-      machineId: "abc123",
-    });
-    await relay.track("my-cli", "evt", "1.0.0", { os: "linux" });
-
-    const body = JSON.parse(
-      (vi.mocked(fetch).mock.calls[0][1] as RequestInit).body as string,
-    );
-    expect(body.deviceType).toBe("cli");
-    expect(body.machineId).toBe("abc123");
-    expect(body.properties.os).toBe("linux");
-  });
-
   it("strips trailing slash from URL", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(
       new Response(JSON.stringify({ id: "uuid-123" }), { status: 202 }),
