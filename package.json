@@ -1,6 +1,6 @@
 {
   "name": "@ofan/telemetry-relay-sdk",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Lightweight client SDK for telemetry-relay",
   "type": "module",
   "exports": {
